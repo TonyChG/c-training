@@ -92,6 +92,7 @@ char **splitline(char *string, char *pattern) {
     return groups;
 }
 
+
 int main(int argc, char **argv) {
     char *pattern;
     char **groups;
