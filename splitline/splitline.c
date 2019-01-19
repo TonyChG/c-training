@@ -28,33 +28,33 @@ char *stringoffset(int offset, char *string) {
 }
 
 
-void printgrouptab(char **grouptab) {
-    while (*grouptab != NULL) {
-        printf("%s\n", *grouptab++);
+void printgroups(char **groups) {
+    while (*groups != NULL) {
+        printf("%s\n", *groups++);
     }
 }
 
 
-char **pushgroup(char *group, char **grouptab, int size) {
+char **pushgroup(char *group, char **groups, int size) {
     /* Dynamic group table */
-    if (grouptab == NULL) {
-        grouptab = (char**) malloc(sizeof(char*) * (size+1));
-        grouptab[0] = group;
-        grouptab[1] = NULL;
+    if (groups == NULL) {
+        groups = (char**) malloc(sizeof(char*) * (size+1));
+        groups[0] = group;
+        groups[1] = NULL;
     } else {
-        grouptab = (char**) realloc(grouptab, sizeof(char*) * (size+2));
-        grouptab[size] = group;
-        grouptab[size+1] = NULL;
+        groups = (char**) realloc(groups, sizeof(char*) * (size+2));
+        groups[size] = group;
+        groups[size+1] = NULL;
     }
 
-    return grouptab;
+    return groups;
 }
 
 char **splitline(char *string, char *pattern) {
     int error;
     int ngroup;
     char **groups = NULL;
-    char *group;
+    char *newgroup;
 
     regex_t re;
     regmatch_t pm;
@@ -74,8 +74,8 @@ char **splitline(char *string, char *pattern) {
                 string = stringoffset(pm.rm_eo, string);
             /* Line don't start with white space */
             } else {
-                group = new_group(0, pm.rm_so, string);
-                groups = pushgroup(group, groups, ngroup);
+                newgroup = new_group(0, pm.rm_so, string);
+                groups = pushgroup(newgroup, groups, ngroup);
                 string = stringoffset(pm.rm_eo, string);
                 ngroup++;
             }
@@ -103,10 +103,10 @@ int main(int argc, char **argv) {
         pattern = argc == 3 ? argv[2] : WHITE_SPACES; 
         groups = splitline(argv[1], pattern);
         if (groups != NULL) {
-            printgrouptab(groups);
+            printgroups(groups);
             free(groups);
         } else {
-            printf("No groups\n");
+            printf("Only white spaces\n");
         }
     }
 }
