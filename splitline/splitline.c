@@ -39,13 +39,13 @@ char **pushgroup(char *group, char **groups, int size) {
     /* Dynamic group table */
     if (groups == NULL) {
         groups = (char**) malloc(sizeof(char*) * (size+1));
-        groups[0] = group;
-        groups[1] = NULL;
     } else {
         groups = (char**) realloc(groups, sizeof(char*) * (size+2));
-        groups[size] = group;
-        groups[size+1] = NULL;
     }
+
+    /* Add new group to the end */
+    groups[size] = group;
+    groups[size+1] = NULL;
 
     return groups;
 }
