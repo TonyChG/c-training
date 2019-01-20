@@ -19,3 +19,6 @@
 
 // #define WHITE_SPACES "[ \t]+"
 #define WHITE_SPACES "[ \t]+"
+
+void stringoffset(int offset, char **string);
+void splitline(struct t_elem **head, char *string, char *pattern);
