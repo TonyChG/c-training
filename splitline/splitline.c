@@ -11,7 +11,7 @@ void stringoffset(int offset, char **string) {
 }
 
 
-void splitline(struct t_elem **head, char *string, char *pattern) {
+void splitline(struct t_delem **head, char *string, char *pattern) {
     int error;
     int ngroup = 0;
 
@@ -32,14 +32,14 @@ void splitline(struct t_elem **head, char *string, char *pattern) {
                 stringoffset(pm.rm_eo, &string);
             /* Line don't start with white space */
             } else {
-                push(head, strndup(string, pm.rm_so));
+                dpush(head, strndup(string, pm.rm_so));
                 stringoffset(pm.rm_eo, &string);
                 ngroup++;
             }
         /* No white space in line */
         } else if (error == REG_NOMATCH) {
             if (strlen(string) > 0) {
-                push(head, string);
+                dpush(head, string);
                 ngroup++;
             }
             break;
@@ -50,7 +50,7 @@ void splitline(struct t_elem **head, char *string, char *pattern) {
 
 int main(int argc, char **argv) {
     char *pattern;
-    struct t_elem *head = NULL;
+    struct t_delem *head = NULL;
 
     if (argc < 2 || argc > 3) {
         printf(USAGE);
@@ -59,8 +59,7 @@ int main(int argc, char **argv) {
         pattern = argc == 3 ? argv[2] : WHITE_SPACES; 
         splitline(&head, argv[1], pattern);
         if (head != NULL) {
-            printlist(head);
-            freelist(head);
+            printdlist(head, PRINT_REVERSE);
         } else {
             printf("Only white spaces\n");
         }

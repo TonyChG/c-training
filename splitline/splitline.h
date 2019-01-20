@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <regex.h>
 #include <string.h>
-#include "list.h"
+#include "dlist.h"
 
 #define USAGE \
     "                  _ _ _   _ _\n" \
@@ -22,4 +22,4 @@
 #define WHITE_SPACES "[ \t]+"
 
 void stringoffset(int offset, char **string);
-void splitline(struct t_elem **head, char *string, char *pattern);
+void splitline(struct t_delem **head, char *string, char *pattern);
