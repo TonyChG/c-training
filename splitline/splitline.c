@@ -1,5 +1,4 @@
 #include "splitline.h"
-#include "list.h"
 
 
 void stringoffset(int offset, char **string) {

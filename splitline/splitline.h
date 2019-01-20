@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <regex.h>
 #include <string.h>
+#include "list.h"
 
 #define USAGE \
     "                  _ _ _   _ _\n" \
