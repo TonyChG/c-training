@@ -44,10 +44,8 @@ void freelist(struct t_elem *head) {
     tmp = head;
 
     while (tmp->next != head) {
-        free(tmp->val);
-        next_elem = tmp->next;
         free(tmp);
-        tmp = next_elem;
+        tmp = tmp->next;
     }
 }
 

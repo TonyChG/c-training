@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
         splitline(&head, argv[1], pattern);
         if (head != NULL) {
             printlist(head);
-            /* freelist(head); */
+            freelist(head);
         } else {
             printf("Only white spaces\n");
         }
