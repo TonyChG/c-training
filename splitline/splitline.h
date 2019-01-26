@@ -22,4 +22,4 @@
 #define WHITE_SPACES "[ \t]+"
 
 void stringoffset(int offset, char **string);
-void splitline(struct t_delem **head, char *string, char *pattern);
+int splitline(struct t_delem **head, char *string, char *pattern);

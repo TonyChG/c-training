@@ -11,7 +11,7 @@ void stringoffset(int offset, char **string) {
 }
 
 
-void splitline(struct t_delem **head, char *string, char *pattern) {
+int splitline(struct t_delem **head, char *string, char *pattern) {
     int error;
     int ngroup = 0;
 
@@ -21,6 +21,10 @@ void splitline(struct t_delem **head, char *string, char *pattern) {
     /* Compile pattern */
     (void) regcomp(&re, pattern, REG_EXTENDED);
 
+    if (!strlen(string)) {
+        printf("No input data\n");
+        return -1;
+    }
     while (strlen(string)) {
         error = regexec(&re, string, 1, &pm, 0);
         if (!error) {
@@ -45,11 +49,13 @@ void splitline(struct t_delem **head, char *string, char *pattern) {
             break;
         }
     }
+    return 0;
 }
 
 
 int main(int argc, char **argv) {
     char *pattern;
+    int status;
     struct t_delem *head = NULL;
 
     if (argc < 2 || argc > 3) {
@@ -57,11 +63,16 @@ int main(int argc, char **argv) {
         return -1;
     } else {
         pattern = argc == 3 ? argv[2] : WHITE_SPACES; 
-        splitline(&head, argv[1], pattern);
-        if (head != NULL) {
-            printdlist(head, PRINT_REVERSE);
+        status = splitline(&head, argv[1], pattern);
+        if (status != -1) {
+            if (head != NULL) {
+                printdlist(head, PRINT_REVERSE);
+            } else {
+                printf("Only white spaces\n");
+            }
         } else {
-            printf("Only white spaces\n");
+            printf(USAGE);
+            return 0;
         }
     }
 }
